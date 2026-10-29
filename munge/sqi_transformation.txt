@@ -1,0 +1,51 @@
+CREATE EXTERNAL TABLE IF NOT EXISTS employee_sales (
+    Age int,
+  Attrition string,
+  BusinessTravel string,
+  DailyRate int,
+  Department string,
+  DistanceFromHome int,
+  Education int,
+  EducationField string,
+  EmployeeCount int,
+  EmployeeNumber int,
+  EnvironmentSatisfaction int,
+  Gender string,
+  HourlyRate int,
+  JobInvolvement int,
+  JobLevel int,
+  JobRole string,
+  JobSatisfaction int,
+  MaritalStatus string,
+  MonthlyIncome int,
+  MonthlyRate int,
+  NumCompaniesWorked int,
+  Ovr18 string,
+  OvrTime string,
+  PercentSalaryHike int,
+  PerformanceRating int,
+  RelationshipSatisfaction int,
+  StandardHours int,
+  StockOptionLevel int,
+  TotalWorkingYears int,
+  TrainingTimesLastYear int,
+  WorkLifeBalance int,
+  YearsAtCompany int,
+  YearsInCurrentRole int,
+  YearsSinceLastPromotion int,
+  YearsWithCurrManager int
+
+)
+ROW FORMAT DELIMITED 
+FIELDS TERMINATED BY ',' 
+LINES TERMINATED BY '\n' 
+STORED AS TEXTFILE 
+LOCATION 'wasbs://employee@employeehdistorage.blob.core.windows.net/employee' 
+TBLPROPERTIES("skip.header.line.count"="1");
+
+
+SELECT Attrition, Department, JobSatisfaction, ROUND(MonthlyIncome, -3) MonthlyIncome
+FROM employee_sales
+WHERE Department LIKE '%Sales%'
+ORDER BY JobSatisfaction DESC;
+       
